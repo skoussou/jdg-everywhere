@@ -23,7 +23,8 @@ The aim is running through a series of Demos / Instructions to familiarise onese
   ** eap-app-hotrod-client (How to Run DEMO)
 
 
-## [[bookmark-a]] SPARK/JDG Demo
+
+[[bookmark-a]] SPARK/JDG Demo
 Content for Spark Demo to go here
 
 

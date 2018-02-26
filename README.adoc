@@ -3,7 +3,7 @@
 The aim is running through a series of Demos / Instructions to familiarise oneself with JDG, its operations, topologies, administration capabilities and see in action some of its functionality
 
 ## JDG On PREMISE
-* Perform Pre-requisites [README-on-prem-setup.md]
+* [Perform Pre-requisites](https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-setup/README-on-prem-setup.md)
 * Data in Motion (How to run xref:bookmark-a[Spark Demo])
   ** Future Work: other intelligence on the lake https://github.com/redhat-italy/jdg-remote-task
   ** Future Work: Continuous Queries

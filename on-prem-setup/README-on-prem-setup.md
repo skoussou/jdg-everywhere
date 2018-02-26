@@ -8,7 +8,7 @@ Setup
 To setup the infrastructure for the demo download the follwoing files to the _*installs*_ directory:
 
 * [jboss-datagrid-7.0.0-server.zip](https://developers.redhat.com/download-manager/file/jboss-datagrid-7.0.0-server.zip)
-* [jboss-eap-7.0.0.zip]()https://developers.redhat.com/download-manager/file/jboss-eap-7.0.0.zip)
+* [jboss-eap-7.0.0.zip](https://developers.redhat.com/download-manager/file/jboss-eap-7.0.0.zip)
 
 * Run the `init-onprem.sh` script to create the EAP & 3 JDG Nodes Setup
 ---

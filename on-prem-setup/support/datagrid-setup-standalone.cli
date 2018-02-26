@@ -9,5 +9,10 @@ embed-server --server-config=clustered.xml
 /subsystem=datagrid-infinispan/cache-container=clustered/distributed-cache=LocationAnalyticsStore:add(configuration=transactional)
 /subsystem=datagrid-infinispan/cache-container=clustered/distributed-cache=HighestRankedAnalyticsStore:add(configuration=transactional)
 
+# Create SPLIT-BRAIN store
+/subsystem=datagrid-infinispan/cache-container=clustered/configurations=CONFIGURATIONS/distributed-cache-configuration=persistent-file-store:write-attribute(name=owners, value=2)
+/subsystem=datagrid-infinispan/cache-container=clustered/configurations=CONFIGURATIONS/distributed-cache-configuration=persistent-file-store:write-attribute(name=segments, value=30)
+/subsystem=datagrid-infinispan/cache-container=clustered/distributed-cache=PartitionScenarios:add(configuration=persistent-file-store)
+
 # Allow remoting connections to public interface
 #/subsystem=jmx/remoting-connector=jmx:write-attribute(name=use-management-endpoint,value=false)

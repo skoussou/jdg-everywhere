@@ -29,19 +29,24 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 ## SPARK/JDG Demo
 Content for Spark Demo to go here
 
-## [[bookmark-b]] Split Brain Demo
+[[bookmark-b]] 
+## Split Brain Demo
 Content for Split Brain Demo to go here
 
-## [[bookmark-c]] Externalize HTTPSession Demo
+[[bookmark-c]] 
+## Externalize HTTPSession Demo
 Content for Externalize HTTPSession Demo to go here
 
-## [[bookmark-d]] Cross-Data Centre Replication Demo
+[[bookmark-d]] 
+## Cross-Data Centre Replication Demo
 Cross-Data Centre Replication for Keycloak Demo to go here
 
-## [[bookmark-e]] Create OCP Datalake Demo
+[[bookmark-e]] 
+## Create OCP Datalake Demo
 Create OCP Datalake DEMO Demo to go here
 
-## [[bookmark-f]] Create JDG Client (Librar/Client-Server) Demo
+[[bookmark-f]] 
+## Create JDG Client (Librar/Client-Server) Demo
 Create JDG Client (Librar/Client-Server) O Demo to go here
 
 

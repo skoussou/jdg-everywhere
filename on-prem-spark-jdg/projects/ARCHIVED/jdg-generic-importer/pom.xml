@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!--parent>
+		<groupId>org.jboss.datagrid.demo</groupId>
+		<artifactId>stackexchange</artifactId>
+        <version>1.0.0</version>
+	</parent-->
+        <groupId>org.jboss.datagrid.demo</groupId>
+        <version>1.0.0</version>
+	<artifactId>jdg-generic-importer</artifactId>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+                <infinispan-remote.version>8.3.0.Final-redhat-1</infinispan-remote.version>
+                <jboss-eap-management-hostname>localhost</jboss-eap-management-hostname>
+		<jboss-eap-management-port>9990</jboss-eap-management-port>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>techpreview-all-repository</id>
+			<name>Red Hat Enterprise Maven Repository</name>
+			<url>http://maven.repository.redhat.com/ga/all/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-enterprise-maven-repository</id>
+			<url>https://maven.repository.redhat.com/ga/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+    <dependencies>
+        <!--dependency>
+           <groupId>org.jboss.datagrid.demo</groupId>
+           <artifactId>${project.parent.artifactId}-model</artifactId>
+        </dependency-->
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-remote</artifactId>
+            <version>${infinispan-remote.version}</version>
+        </dependency>
+    </dependencies>
+    <profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>org.jboss.datagrid.demo.stackexchange.Main</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>${project.artifactId}-full</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                        <executions>
+                            <execution>
+                              <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                              <phase>package</phase> <!-- bind to the packaging phase -->
+                              <goals>
+                                <goal>single</goal>
+                              </goals>
+                            </execution>
+                      </executions>
+                    </plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

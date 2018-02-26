@@ -1,0 +1,9 @@
+# SPLIT BRAIN DEMO
+
+Pre-Requisites
+1. *on-prem-setup* script _*./init-onprem.sh*_ under directory *on-prem-setup* must have run to start EAP & JDG Nodes
+2. script above must have be running *jdg-everywhere/on-prem-setup/support/jboss-eap-7-visualizer-config.cli_* generating *PartitionScenarios* cache
+
+---
+./run-split-brain-demo.sh
+---

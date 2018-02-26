@@ -3,7 +3,10 @@
 The aim is running through a series of Demos / Instructions to familiarise oneself with JDG, its operations, topologies, administration capabilities and see in action some of its functionality
 
 ## JDG On PREMISE
+* Perform Pre-requisites [README-on-prem-setup.md]
 * Data in Motion (How to run xref:bookmark-a[Spark Demo])
+  ** Future Work: other intelligence on the lake https://github.com/redhat-italy/jdg-remote-task
+  ** Future Work: Continuous Queries
 * Split Brain (How to xref:bookmark-b[Split Brain Demo])
 * Externalize  Application Session Data  (How to Run xref:bookmark-c[Externalize HTTPSession demo])
 * [line-through]#Reactive with Vert.x#
@@ -31,7 +34,7 @@ Content for Spark Demo to go here
 
 [[bookmark-b]] 
 ## Split Brain Demo
-Content for Split Brain Demo to go here
+* https://github.com/skoussou/jdg-everywhere/on-prem-split-brain/README-split-brain.md
 
 [[bookmark-c]] 
 ## Externalize HTTPSession Demo

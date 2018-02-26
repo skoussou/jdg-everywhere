@@ -96,7 +96,7 @@ if [ $answer == "yes" ]; then
   if [ $confirmation == "yes" ]; then
      	echo "  - deleting existing target directory..."
   	echo
-      	#rm -rf target
+      	rm -rf target
   fi
 else
   echo "We will not be deleting anything"

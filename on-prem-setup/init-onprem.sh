@@ -88,14 +88,16 @@ fi
 echo "  - Installing JDG"
 JDG_EXISTS=$(cd target && find -name jboss-datagrid-7*)
 echo JDG_EXISTS=$JDG_EXISTS
-if [ -z JDG_EXISTS ]; then
+if [ -d $JDG_EXISTS ]; then
    echo
+   echo "unzip -q -d target $SRC_DIR/$JDG_INSTALL"
    unzip -q -d target $SRC_DIR/$JDG_INSTALL
 else
    echo "  - JDG already installed at $JDG_EXISTS"
 fi
 
 JDG_HOME=$(cd target/jboss-datagrid-7* && pwd)
+echo $JDG_HOME
 
 echo "  - Configuring JDG"
 echo
@@ -104,11 +106,11 @@ $JDG_HOME/bin/add-user.sh -a -u admin -p admin-123 -r ApplicationRealm -s
 #$JDG_HOME/bin/cli.sh --file=support/datagrid-setup.cli > /dev/null
 
 echo
-echo
 echo "*************************************"
 echo " Following command should be run in each project to setup relevant caches OR ALL Possible known caches added here"
 echo "$JDG_HOME/bin/cli.sh --file=support/datagrid-setup-standalone.cli > /dev/null"
 echo "*************************************"
+echo
 $JDG_HOME/bin/cli.sh --file=support/datagrid-setup-standalone.cli > /dev/null
 
 if [ ! -d $JDG_HOME/standalone1 ]; then
@@ -184,9 +186,9 @@ echo
 echo "  - Installing JBoss EAP"
 echo
 
-EAP_EXISTS=$(cd target && find -name jboss-datagrid-7*)
+EAP_EXISTS=$(cd target && find -name jboss-eap-7*)
 echo EAP_EXISTS=$EAP_EXISTS
-if [ -z EAP_EXISTS ]; then
+if [ -d $EAP_EXISTS ]; then
    echo
    unzip -q -d target $SRC_DIR/$EAP_INSTALL
 else
@@ -210,6 +212,12 @@ echo
 export JAVA_OPTS="-Xms256m -Xmx1024m"
 pushd target/jboss-eap-7*/bin > /dev/null
 ./standalone.sh -b 0.0.0.0  -Djdg.visualizer.jmxUser=admin -Djdg.visualizer.jmxPass=admin-123 -Djdg.visualizer.serverList=localhost:11322\;localhost:11422\;localhost:11522 > /dev/null &
+popd > /dev/null
+
+echo "  - Building the stackexchange project"
+echo
+pushd projects/stackexchange > /dev/null
+mvn -q clean install || { echo >&2 "Failed to compile the stackexchange project"; exit 3; }
 popd > /dev/null
 
 echo "  - Building the jdg-visualizer project"

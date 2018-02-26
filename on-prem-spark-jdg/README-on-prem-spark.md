@@ -21,15 +21,15 @@ The following scripts have been provided to run the demo and check results at ht
 - KeyWordAnalyticsStore
 
 * Kick-off Spark installation & Start the spark nodes
----
-./0-setup-spark-binaries.sh
----
+
+$ ./0-setup-spark-binaries.sh
+
 * Import Data & run analytics
----
-./1-import-data-run-analytics.sh
----
+
+$ ./1-import-data-run-analytics.sh
+
 * Stop Spark Nodes
----
-./2-stop-spark-nodes.sh
----
+
+$ ./2-stop-spark-nodes.sh
+
 

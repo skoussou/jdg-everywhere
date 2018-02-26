@@ -6,7 +6,7 @@ This demo shows how to JBoss Data Grid integration with Spark is work. It also u
 --------------
 To setup the infrastructure for the demo download the follwoing files to the *installs* directory:
 
-* [spark-1.6.2-bin-hadoop2.6.tgz](http://www.apache.org/dyn/closer.lua/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz)
+* http://www.apache.org/dyn/closer.lua/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz[spark-1.6.2-bin-hadoop2.6.tgz]
 
 ## Pre-Requisites
 --------------
@@ -20,16 +20,16 @@ The following scripts have been provided to run the demo and check results at ht
 - HighestAnalyticsStore
 - KeyWordAnalyticsStore
 
-* Kick-off Spark installation & Start the spark nodes
-
+1. Kick-off Spark installation & Start the spark nodes
+----
 $ ./0-setup-spark-binaries.sh
-
-* Import Data & run analytics
-
+----
+2. Import Data & run analytics
+----
 $ ./1-import-data-run-analytics.sh
-
-* Stop Spark Nodes
-
+----
+3. Stop Spark Nodes
+----
 $ ./2-stop-spark-nodes.sh
-
+----
 

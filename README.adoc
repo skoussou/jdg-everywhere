@@ -30,11 +30,11 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 [[bookmark-a]] 
 ## SPARK/JDG Analytics Demo
-* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-spark-jdg/README-on-prem-spark.md[How To Run Spark/JDG Analytics Demo]
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-spark-jdg/README-on-prem-spark.adoc[How To Run Spark/JDG Analytics Demo]
 
 [[bookmark-b]] 
 ## Split Brain Demo
-* https://github.com/skoussou/jdg-everywhere/on-prem-split-brain/README-split-brain.md[How To Run Split Brain Demo]
+* https://github.com/skoussou/jdg-everywhere/on-prem-split-brain/README-split-brain.adoc[How To Run Split Brain Demo]
 
 [[bookmark-c]] 
 ## Externalize HTTPSession Demo

@@ -34,7 +34,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 [[bookmark-b]] 
 ## Split Brain Demo
-* https://github.com/skoussou/jdg-everywhere/on-prem-split-brain/README-split-brain.adoc[How To Run Split Brain Demo]
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-split-brain/README-split-brain.adoc[How To Run Split Brain Demo]
 
 [[bookmark-c]] 
 ## Externalize HTTPSession Demo

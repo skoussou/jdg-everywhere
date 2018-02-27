@@ -142,9 +142,7 @@ sleep 5
 
 
 
-echo
-echo
-echo
+
 echo
 echo
 echo
@@ -217,7 +215,7 @@ echo
 echo
 echo "Using probe Check current JGROUPs configuration (Requires jgroups-diagnostics to be setup, see $JDG_HOME/standalone3/configuration/clustered.xml"
 echo "----------------------------------------------------------------------------------------------------"
-echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost protocols"
+echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost  print-protocols"
 java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost print-protocols
 echo
 echo
@@ -227,11 +225,13 @@ sleep 2
 echo "Insert DISCARD protocol & check protocol stack"
 echo "-----------------------------------------------"
 echo
+sleep 1
 echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost insert-protocol=DISCARD=above=UDP"
 java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost insert-protocol=DISCARD=above=UDP
 echo
+sleep 2
 echo
-echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost protocols"
+echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost print-protocols"
 java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost print-protocols
 sleep 2
 echo
@@ -244,7 +244,6 @@ echo "java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgro
 java -classpath $JDG_HOME/modules/system/layers/base/org/jgroups/main/jgroups-4.0.1.Final-redhat-1.jar org.jgroups.tests.Probe -addr 230.0.0.4 -ttl 20 -bind_addr localhost jmx=DISCARD.discard_all=true
 echo
 echo
-
 sleep 5
 
 echo

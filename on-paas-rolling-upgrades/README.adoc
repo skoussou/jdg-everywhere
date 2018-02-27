@@ -4,9 +4,10 @@
 == OCP SETUP
 
 * Change to project *jdg-rest-rolling-upgrade-demo*
----
+[source, bash]
+----
 oc project jdg-rest-rolling-upgrade-demo
----
+----
 
 == RUN Demo
 

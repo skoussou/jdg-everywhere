@@ -5,6 +5,7 @@ This directory provides a setup fo ALL On OCP Demos
 === Openshift Downloads
 
 *Warning*: We assume you have *_docker daemon_* running (eg. Linux installation, or a vm with docker on Windows etc.). See configurations for docker registries/storage at *./docker*
+
 *Note*: Ensure there is enough (at least 12GB) of RAM available
 
 To setup the infrastructure for the demo download the following files to the _*installs*_ directory:

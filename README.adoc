@@ -1,4 +1,4 @@
-# JBoss JDG 7.x Workshop
+# JBoss JDG 7.x Demos for On Premist, On Cloud, On PAAS Environments
 
 The aim is running through a series of Demos / Instructions to familiarise oneself with JDG, its operations, topologies, administration capabilities and see in action some of its functionality
 

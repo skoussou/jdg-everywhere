@@ -21,7 +21,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 * https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-setup/README.adoc[Perform ON-OCP Pre-requisites]
 * Datalake service  
   ** Caches 
-  ** Rolling-Upgrades
+  ** Rolling-Upgrades (How to Run xref:bookmark-d[Rolling Updates demo])
   ** [line-through]#Spark Integration#
   ** How to Run xref:bookmark-e["Create OCP Datalake" Demo]
 * Data side-by-side with App
@@ -45,7 +45,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 [[bookmark-d]] 
 ## Cross-Data Centre Replication Demo
-Cross-Data Centre Replication for Keycloak Demo to go here
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-rolling-upgrades/README.adoc[How To perform Rolling Upgrades Demo]
 
 [[bookmark-e]] 
 ## Create OCP Datalake Demo

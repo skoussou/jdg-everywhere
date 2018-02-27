@@ -71,31 +71,7 @@ oc login -u system:admin
 oc create -f ./installs/application-templates/datagrid/datagrid65-basic.json -n openshift
 oc create -f ./installs/application-templates/datagrid/datagrid71-basic.json -n openshift
 oc create -f ./installs/application-templates/./eap/eap71-basic-s2i.json -n openshift  
+oc get template -n openshift
 oc login -u developer -p developer
 ----
 
-
-
-
-
-
-
-
-
-
-* Run the `init-onprem.sh` script to create the EAP & 3 JDG Nodes Setup
-  * In addition, it sets up caches via _*/support/jboss-eap-7-visualizer-config.cli*_ script (so put any new caches in this script)
-  * In addition, it deploys the _*./projects/jdg-visualizer_* in EAP to visualize JDG cluster
-
-[source, bash]
----
-    $ sh init-onprem.sh
----
-
-
-* Run the 'clean.sh' and follow prompts to stop servers or clean the enviroment
-
-[source, bash]
----
-    $ sh clean.sh
----

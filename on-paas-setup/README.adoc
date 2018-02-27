@@ -4,7 +4,7 @@ This directory provides a setup fo ALL On OCP Demos
 
 === Openshift Downloads
 
-*Warning*: We assume you have *_docker daemon_* running (eg. Linux installation, or a vm with docker on Windows etc.). See configurations for docker registries/storage at *./docker*
+*Warning*: We assume you have *_docker daemon_* running (eg. Linux installation, or a vm with docker on Windows etc.). See configurations for docker registries/storage at https://github.com/skoussou/jdg-everywhere/tree/master/on-paas-setup/docker[/docker]
 
 *Note*: Ensure there is enough (at least 12GB) of RAM available
 

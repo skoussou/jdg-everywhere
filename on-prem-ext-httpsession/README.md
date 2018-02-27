@@ -1,0 +1,84 @@
+# JBoss EAP Clustered SSO Demo
+
+## Prerequisites to Run This Demo
+
+- JDK 1.8+ is required
+- Maven 3+ required if you're planning to play with the source code
+- JBoss EAP & JBoss JDG install packs are needed to be placed in install directory. See [the required JBoss packages](./install/README.md)
+
+## Prerequisites to Run This Demo
+
+- JDK 1.8+ is required
+- Maven 3+ required if you're planning to play with the source code
+- JBoss EAP & JBoss JDG install packs are needed to be placed in install directory (@ ../on-prem-setup/installs)
+
+## Prepare the Demo
+Commands to create the environemnt & test app
+https://developers.redhat.com/blog/2015/11/23/externalize-http-session-data-to-jboss-data-grid/
+
+---
+$ sh setup-jdg-http-extern.sh
+---
+
+
+TO SHOWCASE
+==============================================================
+Directories required
+
+DEMO_HOME/on-prem-ext-httpsession/target/eap7-1
+DEMO_HOME/on-prem-ext-httpsession/target/eap7-2
+DEMO_HOME/on-prem-ext-httpsession/target/jboss-datagrid-7.1.0-server
+
+
+DEMO_HOME/on-prem-ext-httpsession/target
+   startJDG.sh
+
+DEMO_HOME/on-prem-ext-httpsession/target
+   startEAP1.sh
+
+DEMO_HOME/on-prem-ext-httpsession/target
+   startEAP2.sh
+
+jconole 2 session
+service:jmx:remote+http://localhost:9991
+service:jmx:remote+http://localhost:9992
+
+STEP 1 - START GRID & APPS
+==========================
+- startJDG.sh
+- startEAP1.sh
+- startEAP2.sh
+- You  have one JDG instance that used to store EAP cluster data & http sessions data
+
+
+SCENARIO 1 (Confirm Session Shared)
+==============================================================================
+- http://domain1.garanti.tr:8081/sso-app1 
+		Open page that hosted on EAP instance 1. Place some key-value pairs in the http session. Check cache stats and note session identity
+- http://domain2.garanti.tr:8082/sso-app2 
+		Open a new tab on the browser and go to page that hosted on EAP instance 2. 
+		Validate that you have the session id on this app and you can access to same http session stored data. 
+		Store some additional session data, switch to the first tab, either refresh the page or click on the "get session data" button to see http session stored data. 
+		You should see all the data stored in the session cache
+
+same for
+- http://domain2.garanti.tr:8081/sso-app1/
+- http://domain1.garanti.tr:8082/sso-app2 
+
+jdgAdmin/Password711! (or 710!)
+
+SCENARIO 2 (Restart Apps & Confirm Session still exists and data maintained)
+==============================================================================
+- At this point you can try restarting your EAP instances and validating session info is still there
+
+SCENARIO 3 (Invalidate Session/Login)
+==============================================================================
+- Login to the one of the applications. This action invalidates your current session and gives you a new one. 
+- Switch to the other application and refresh the page. You should see that you're logged in and session is still shared between apps
+
+SCENARIO 4 (Logout & Invalidate Session)
+==============================================================================
+- Logout from one of the apps and check that session is invalidated & both apps are still sharing the session
+- In order to access jdg statistics use http://localhost:8081/sso-app1/jdg.jsp page
+   Enjoy!
+

@@ -1,0 +1,7 @@
+project/target
+project/target/**
+install/*.zip
+target
+target/**
+ews
+ews/**

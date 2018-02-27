@@ -1,6 +1,3 @@
-* LABEL SOURCE CLUSTER: app=jdg65-cluster
-* LABEL SOURCE CLUSTER: app=jdg71-cluster
-
 == OCP SETUP
 
 * Change to project *jdg-rest-rolling-upgrade-demo*
@@ -20,7 +17,7 @@ or
 ./update-create-rolling-upgrades-clusters.sh 			(default: DNS_PING)
 ----
 
-Note: As PODs are to be scaled up it adds view permissions for KUBERNETES API to facilitate discover of nodes
+*Note:* As PODs are to be scaled up it adds view permissions for KUBERNETES API to facilitate discover of nodes
 [source, bash]
 ----
 oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -n $(oc project -q)
@@ -31,6 +28,10 @@ oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-servi
                                     -e OPENSHIFT_KUBE_PING_LABELS=app=jdg71-cluster
                                     -e OPENSHIFT_KUBE_PING_NAMESPACE=jdg-rest-rolling-upgrade-demo
 ----
+
+*Note:* Labels used for each cluster to be used with deleting objects
+* LABEL SOURCE CLUSTER: *_app=jdg65-cluster_*
+* LABEL SOURCE CLUSTER: *_app=jdg71-cluster_*
 
 * TEST cluster content (No Content on JDG71Cluster)
 [source, bash]

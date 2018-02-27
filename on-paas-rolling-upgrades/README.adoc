@@ -33,7 +33,10 @@ and ENV variables for KUBE_PING
 
 * LABEL SOURCE CLUSTER: *_app=jdg65-cluster_*
 * LABEL SOURCE CLUSTER: *_app=jdg71-cluster_*
-------------
+
+
+
+
 * TEST cluster content (No Content on JDG71Cluster)
 [source, bash]
 ----

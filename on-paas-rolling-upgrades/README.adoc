@@ -30,11 +30,10 @@ and ENV variables for KUBE_PING
 ----
 
 *Note:* Labels used for each cluster to be used with deleting objects
+- LABEL SOURCE CLUSTER: *_app=jdg65-cluster_*
+- LABEL TARGET CLUSTER: *_app=jdg71-cluster_*
 
-* LABEL SOURCE CLUSTER: *_app=jdg65-cluster_*
-* LABEL SOURCE CLUSTER: *_app=jdg71-cluster_*
-
-
+--
 
 
 * TEST cluster content (No Content on JDG71Cluster)

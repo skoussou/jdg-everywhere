@@ -10,7 +10,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
   ** Future Work: Continuous Queries
 * Split Brain (How to xref:bookmark-b[Split Brain Demo])
 * Externalize  Application Session Data  (How to Run xref:bookmark-c[Externalize HTTPSession demo])
-* [line-through]#Reactive with Vert.x#
+* *(NEW/COMING)* Reactive with Vert.x
 
 ## JDG On Cloud
 * Cross-Data Centre Replication for Keycloak (xref:bookmark-d[X-Site Run Demo]) 
@@ -20,15 +20,15 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 * https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-setup/README.adoc[Perform ON-OCP Pre-requisites]
 * Datalake service  
-  ** Caches 
+  ** Caches
   ** Rolling-Upgrades (How to Run xref:bookmark-d[Rolling Updates demo])
-  ** [line-through]#Spark Integration#
-  ** How to Run xref:bookmark-e["Create OCP Datalake" Demo]
+  ** *(TODO)* Spark Integration
+  ** How to xref:bookmark-e["Create OCP Datalake"]
 * Data side-by-side with App
   ** eap-app-jdg-lib-client (How to xref:bookmark-f[Run Demo])
 * Data Remotely
   ** eap-app-hotrod-client (How to xref:bookmark-f[Run Demo])
-
+* *(NEW/COMING)* Reactive with Vert.x
 
 
 [[bookmark-a]] 
@@ -52,7 +52,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 * https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-datalake-creator/README.adoc[How To Create/Manage/Delete JDG OCP Datalake]
 
 [[bookmark-f]] 
-## Create JDG Client (Librar/Client-Server) Demo
+## Create JDG Client (Library/Client-Server) Demo
 * https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-jdg-clients/README.adoc[Create JDG Client Library/Client-Server Mode Demo]
 
 

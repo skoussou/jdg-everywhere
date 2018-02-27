@@ -23,13 +23,14 @@ or
 oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -n $(oc project -q)
 oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account -n $(oc project -q)
 
-# and ENV variables for KUBE_PING
+and ENV variables for KUBE_PING
                                     -e JGROUPS_PING_PROTOCOL=openshift.KUBE_PING
                                     -e OPENSHIFT_KUBE_PING_LABELS=app=jdg71-cluster
                                     -e OPENSHIFT_KUBE_PING_NAMESPACE=jdg-rest-rolling-upgrade-demo
 ----
 
 *Note:* Labels used for each cluster to be used with deleting objects
+
 * LABEL SOURCE CLUSTER: *_app=jdg65-cluster_*
 * LABEL SOURCE CLUSTER: *_app=jdg71-cluster_*
 

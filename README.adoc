@@ -38,7 +38,7 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 [[bookmark-c]] 
 ## Externalize HTTPSession Demo
-Content for Externalize HTTPSession Demo to go here
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-ext-httpsession/README.md[How To Externalize HTTPSession on Remote JDG Server Demo]
 
 [[bookmark-d]] 
 ## Cross-Data Centre Replication Demo

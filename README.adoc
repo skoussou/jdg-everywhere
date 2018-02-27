@@ -3,7 +3,8 @@
 The aim is running through a series of Demos / Instructions to familiarise oneself with JDG, its operations, topologies, administration capabilities and see in action some of its functionality
 
 ## JDG On PREMISE
-* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-setup/README-on-prem-setup.md[Perform Pre-requisites]
+
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-prem-setup/README-on-prem-setup.md[Perform ON-PREM Pre-requisites]
 * Data in Motion (How to run xref:bookmark-a[Spark Demo])
   ** Future Work: other intelligence on the lake https://github.com/redhat-italy/jdg-remote-task
   ** Future Work: Continuous Queries
@@ -16,6 +17,8 @@ The aim is running through a series of Demos / Instructions to familiarise onese
   ** (Keycloak cross-datacentre (http://blog.keycloak.org/2018/01/keycloak-cross-data-center-setup-in-aws.html)
 
 ## JDG on OCP
+
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-setup/README.adoc[Perform ON-OCP Pre-requisites]
 * Datalake service  
   ** Caches 
   ** Rolling-Upgrades

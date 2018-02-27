@@ -1,0 +1,52 @@
+JDG DATALAKE CREATION
+=============================
+
+- Remember: if node(s) outside PROJECT SPACE HotRod topology is not availble to client (ie. multiple hops due to haproxy ... SNI eventually supported ... when?)
+- Remember: To see STATS go to POD & open Java console (Note: not modifiable ... as is immutable container)
+
+
+OPENSHIFT_KUBE_PING_NAMESPACE= If this variable is not set, then the server will act as if it is a single-node cluster,
+OPENSHIFT_KUBE_PING_LABELS=    If this variable is not set, then pods outside the application (but in the same namespace) will attempt to join. 
+
+# Authorization must be granted to the service account the pod is running under to be allowed to Kubernetes' REST api.
+
+oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -n $(oc project -q) 			# Using the default service account in the myproject namespace: 
+oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account -n $(oc project -q)		# Using the eap-service-account in the myproject namespace: 
+
+
+CONFIGURING CACHES --> see at CACHE_ENV_VARIABLE.txt for more variables
+===================
+# see processed template
+oc process -f datagrid71-partition-KUBE-PING.json -p APPLICATION_NAME=from-jdg71-template -p CACHE_NAMES=carcache -p INFINISPAN_CONNECTORS=hotrod,rest -p OPENSHIFT_KUBE_PING_NAMESPACE=myproject-l application=from-jdg71-template -o yaml
+
+# run and create with template
+oc process -f datagrid71-partition-KUBE-PING.json -p APPLICATION_NAME=from-jdg71-template -p CACHE_NAMES=carcache -p INFINISPAN_CONNECTORS=hotrod,rest -p OPENSHIFT_KUBE_PING_NAMESPACE=myproject -l application=from-jdg71-template | oc create -n myproject -f -
+
+# delete ALL generated based on label
+oc delete all -l application=from-jdg71-template
+oc login -u system:admin
+oc delete pvc $(oc get pvc --namespace=myproject | grep datagrid-claim | awk '{print $1})
+
+
+JDG DATALAKE PUT/GET Entries (REST)
+====================================
+curl -X PUT -d "ExampleValue" http://jdg-datalake-myproject.127.0.0.1.nip.io/rest/strngCache/ExampleKey
+curl -X GET http://jdg-datalake-myproject.127.0.0.1.nip.io/rest/strngCache/ExampleKey
+
+curl -X PUT -d "v-1" http://jdg-datalake-myproject.127.0.0.1.nip.io/rest/stringCache/k-1
+curl -X GET http://jdg-datalake-myproject.127.0.0.1.nip.io/rest/stringCache/k-1
+
+# GETTING KEYS
+curl -H "Accept:application/json" -X GET http://jdg-datalake-myproject.127.0.0.1.nip.io/rest/stringCache?extended
+
+
+
+JDG DATALAKE CREATION Troubleshooting
+============================================
+1. Openshift logs
+2. Openshift Java Console (via POD, statistics on required)
+  - Remember cache MUST Be enabled to show statistics
+     CACHE_NAME_CACHE_STATISTICS=true
+  - POD -> Java Console - jboss.datagrid-infinispan -> Cache -> CACHE_NAME - Statisticss
+  - POD -> Java Console - jboss.datagrid-infinispan -> Cache -> CACHE_NAME - ClusterCacheStats (This one doesn't always seem accurate)
+3. oc logs -f <pod_name> <container_name>

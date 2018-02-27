@@ -1,0 +1,234 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The web server's HTTP port.
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake
+  spec:
+    ports:
+    - port: 8080
+      targetPort: 8080
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Memcached service for clustered applications.
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake-memcached
+  spec:
+    ports:
+    - port: 11211
+      targetPort: 11211
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Hot Rod service for clustered applications.
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake-hotrod
+  spec:
+    ports:
+    - port: 11333
+      targetPort: 11333
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Hot Rod service for clustered applications.
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake-debug
+  spec:
+    ports:
+    - port: 8787
+      targetPort: 8787
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The JGroups ping port for clustering.
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake-ping
+  spec:
+    clusterIP: None
+    ports:
+    - name: ping
+      port: 8888
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+- apiVersion: v1
+  id: ocp-jdg-datalake-http
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for application's HTTP service.
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake
+  spec:
+    host: ""
+    to:
+      name: ocp-jdg-datalake
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: ocp-jdg-datalake
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          application: ocp-jdg-datalake
+          deploymentConfig: ocp-jdg-datalake
+        name: ocp-jdg-datalake
+      spec:
+        containers:
+        - env:
+          - name: USERNAME
+            value: ""
+          - name: PASSWORD
+            value: ""
+          - name: JGROUPS_PING_PROTOCOL
+            value: openshift.KUBE_PING
+          - name: OPENSHIFT_KUBE_PING_NAMESPACE
+            value: jdg-demo
+          - name: INFINISPAN_CONNECTORS
+            value: hotrod,memcached,rest
+          - name: CACHE_NAMES
+            value: carcache,partitionedcache
+          - name: DATAVIRT_CACHE_NAMES
+            value: ""
+          - name: CACHE_TYPE_DEFAULT
+            value: ""
+          - name: ENCRYPTION_REQUIRE_SSL_CLIENT_AUTH
+            value: ""
+          - name: HOTROD_SERVICE_NAME
+            value: ocp-jdg-datalake-hotrod
+          - name: MEMCACHED_CACHE
+            value: default
+          - name: REST_SECURITY_DOMAIN
+            value: ""
+          - name: JGROUPS_CLUSTER_PASSWORD
+            value: keHNpDcR
+          - name: ADMIN_GROUP
+            value: ""
+          - name: HOTROD_AUTHENTICATION
+            value: ""
+          - name: CONTAINER_SECURITY_ROLE_MAPPER
+            value: ""
+          - name: CONTAINER_SECURITY_ROLES
+            value: ""
+          - name: DATAGRID_SPLIT
+            value: "true"
+          image: 172.30.1.1:5000/openshift/jboss-datagrid71-openshift
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - /opt/datagrid/bin/livenessProbe.sh
+            initialDelaySeconds: 60
+          name: ocp-jdg-datalake
+          ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8888
+            name: ping
+            protocol: TCP
+          - containerPort: 11211
+            name: memcached
+            protocol: TCP
+          - containerPort: 11222
+            name: hotrod-internal
+            protocol: TCP
+          - containerPort: 11333
+            name: hotrod
+            protocol: TCP
+          - containerPort: 8787
+            name: debug
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - /opt/datagrid/bin/readinessProbe.sh
+          resources:
+            limits:
+              memory: 1Gi
+          volumeMounts:
+          - mountPath: /opt/datagrid/standalone/partitioned_data
+            name: ocp-jdg-datalake-datagrid-pvol
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - name: ocp-jdg-datalake-datagrid-pvol
+          persistentVolumeClaim:
+            claimName: ocp-jdg-datalake-datagrid-claim
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ocp-jdg-datalake
+        from:
+          kind: ImageStreamTag
+          name: jboss-datagrid71-openshift:latest
+          namespace: openshift
+      type: ImageChange
+    - type: ConfigChange
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      application: ocp-jdg-datalake
+      template: datagrid71-partition
+      xpaas: 1.4.8
+    name: ocp-jdg-datalake-datagrid-claim
+  spec:
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: 1Gi
+kind: List
+metadata: {}

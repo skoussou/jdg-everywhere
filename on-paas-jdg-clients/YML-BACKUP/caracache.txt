@@ -1,0 +1,109 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2018-02-21T04:33:14Z'
+  generation: 2
+  labels:
+    app: carcache
+  name: carcache
+  namespace: myproject
+  resourceVersion: '6826'
+  selfLink: /apis/apps.openshift.io/v1/namespaces/myproject/deploymentconfigs/carcache
+  uid: 54e8bbb8-16c0-11e8-8cc1-68f728593760
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: carcache
+    deploymentconfig: carcache
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: carcache
+        deploymentconfig: carcache
+    spec:
+      containers:
+        - env:
+            - name: CACHE_NAMES
+              value: carcache
+            - name: INFINISPAN_CONNECTORS
+              value: hotrod
+          image: >-
+            registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift@sha256:b1099d3e60249c63b2cce2e0ef42c31cc9ce05f41c028f0bb219e90d4862d36a
+          imagePullPolicy: IfNotPresent
+          name: carcache
+          ports:
+            - containerPort: 8778
+              protocol: TCP
+            - containerPort: 11211
+              protocol: TCP
+            - containerPort: 11222
+              protocol: TCP
+            - containerPort: 11333
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - carcache
+        from:
+          kind: ImageStreamTag
+          name: 'jboss-datagrid71-openshift:1.2'
+          namespace: openshift
+        lastTriggeredImage: >-
+          registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift@sha256:b1099d3e60249c63b2cce2e0ef42c31cc9ce05f41c028f0bb219e90d4862d36a
+      type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2018-02-21T04:33:19Z'
+      lastUpdateTime: '2018-02-21T04:33:19Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2018-02-21T04:33:20Z'
+      lastUpdateTime: '2018-02-21T04:33:20Z'
+      message: replication controller "carcache-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+  details:
+    causes:
+      - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
+

@@ -49,10 +49,10 @@ The aim is running through a series of Demos / Instructions to familiarise onese
 
 [[bookmark-e]] 
 ## Create OCP Datalake Demo
-Create OCP Datalake DEMO Demo to go here
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-datalake-creator/README.adoc[How To Create/Manage/Delete JDG OCP Datalake]
 
 [[bookmark-f]] 
 ## Create JDG Client (Librar/Client-Server) Demo
-Create JDG Client (Librar/Client-Server) O Demo to go here
+* https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-jdg-clients/README.adoc[Create JDG Client Library/Client-Server Mode Demo]
 
 

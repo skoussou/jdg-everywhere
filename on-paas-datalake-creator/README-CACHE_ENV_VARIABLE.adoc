@@ -1,0 +1,53 @@
+<CACHE_NAME>_CACHE_TYPE		Determines whether this cache should be distributed or replicated. Defaults to distributed.						Example: replicated
+<CACHE_NAME>_CACHE_START	Determines if this cache should be started on server startup, or lazily when requested by a service or deployment. Defaults to LAZY.	Example: EAGER
+<CACHE_NAME>_CACHE_BATCHING	Enables invocation batching for this cache. Defaults to false.										Example: true
+<CACHE_NAME>_CACHE_STATISTICS	Determines whether or not the cache collects statistics. Disable for optimal performance. Defaults to true.				Example: false
+<CACHE_NAME>_CACHE_MODE		Sets the clustered cache mode, ASYNC for asynchronous operations, or SYNC for synchronous operations.					Example: ASYNC
+<CACHE_NAME>_CACHE_QUEUE_SIZE	In ASYNC mode this attribute can be used to trigger flushing of the queue when it reaches a specific threshold. 
+				Defaults to 0, which disables flushing.													Example: 100
+<CACHE_NAME>_CACHE_QUEUE_FLUSH_INTERVAL	In ASYNC mode this attribute controls how often the asynchronous thread runs to flush the replication queue. 
+					This should be a positive integer that represents thread wakeup time in milliseconds. Defaults to 10.				Example: 20
+<CACHE_NAME>_CACHE_REMOTE_TIMEOUT	In SYNC mode the timeout, in milliseconds, used to wait for an acknowledgement when making a remote call, 
+					after which the call is aborted and an exception is thrown. Defaults to 17500.							Example: 25000
+<CACHE_NAME>_CACHE_OWNERS		Number of cluster-wide replicas for each cache entry. Defaults to 2.								Example: 5
+<CACHE_NAME>_CACHE_SEGMENTS		Number of hash space segments per cluster. The recommended value is 10 * cluster size. Defaults to 80.				Example: 30
+<CACHE_NAME>_CACHE_L1_LIFESPAN		Maximum lifespan, in milliseconds, of an entry placed in the L1 cache. Defaults to 0, indicating that L1 is disabled.		Example: 100.
+<CACHE_NAME>_CACHE_EVICTION_STRATEGY	Sets the cache eviction strategy. Available options are UNORDERED, FIFO, LRU, LIRS, and NONE (to disable eviction). 
+					Defaults to NONE.														Example: FIFO
+<CACHE_NAME>_CACHE_EVICTION_MAX_ENTRIES	Maximum number of entries in a cache instance. If selected value is not a power of two the actual value will default to the 
+					least power of two larger than the selected value. A value of -1 indicates no limit. Defaults to 10000.				Example: -1
+<CACHE_NAME>_CACHE_EXPIRATION_LIFESPAN	Maximum lifespan, in milliseconds, of a cache entry, after which the entry is expired cluster-wide. 
+					Defaults to -1, indicating that the entries never expire.									Example: 10000
+<CACHE_NAME>_CACHE_EXPIRATION_MAX_IDLE	Maximum idle time, in milliseconds, a cache entry will be maintained in the cache. 
+					If the idle time is exceeded, then the entry will be expired cluster-wide. Defaults to -1, 
+					indicating that the entries never expire.											Example: 10000
+<CACHE_NAME>_CACHE_EXPIRATION_INTERVAL	Interval, in milliseconds, between subsequent runs to purge expired entries from memory and any cache stores. 
+					If you wish to disable the periodic eviction process altogether, then set the interval to -1. Defaults to 5000.			Example: -1
+<CACHE_NAME>_JDBC_STORE_TYPE		Type of JDBC store to configure. This value may either be string or binary.							Example: string
+<CACHE_NAME>_JDBC_STORE_DATASOURCE	Defines the jndiname of the datasource.												Example: java:jboss/datasources/ExampleDS
+<CACHE_NAME>_KEYED_TABLE_PREFIX		Defines the prefix prepended to the cache name used when composing the name of the cache entry table. Defaults to ispn_entry.	Example: JDG
+<CACHE_NAME>_CACHE_INDEX		The indexing mode of the cache. Valid values are NONE, LOCAL, and ALL. Defaults to NONE.					Example: ALL
+<CACHE_NAME>_INDEXING_PROPERTIES	Comma separated list of properties to pass on to the indexing system.								Example: default.directory_provider=ram
+<CACHE_NAME>_CACHE_SECURITY_AUTHORIZATION_ENABLED	Enables authorization checks for this cache. Defaults to false.							Example: true
+<CACHE_NAME>_CACHE_SECURITY_AUTHORIZATION_ROLES		Sets the valid roles required to access this cache.								Example: admin, reader, writer
+<CACHE_NAME>_CACHE_PARTITION_HANDLING_ENABLED		If enabled, then the cache will enter degraded mode when it loses too many nodes. Defaults to true.		Example: false 
+
+
+
+CACHE_CONTAINER_STATISTICS		Determines if the cache container collects statistics. Disable for optimal performance. Defaults to true.			Example: false 
+CACHE_NAMES				List of caches to configure. 
+					Defaults to default, memcached, and each defined cache will be configured as a distributed-cache with a mode of SYNC.		Example: addressbook, addressbook_indexed 
+DATAGRID_SPLIT 				Allow multiple instances of JBoss Data Grid server to share the same persistent volume. If enabled (set to true) each 
+					instance will use a separate area within the persistent volume as its data directory. Such persistent volume is required to 
+					be mounted at /opt/datagrid/standalone/partitioned_data path. Not set by default.						Example: true 
+					(I think it needs PV & PVC created previously (see 
+					/home/stkousso/Stelios/Projects/Events/2018/jdg-TECH-MEETUP/jdg-ocp-setup/YML-BACKUP/01-ocp-jdg-datalake-datagrid-pvol.yaml  
+					/home/stkousso/Stelios/Projects/Events/2018/jdg-TECH-MEETUP/jdg-ocp-setup/YML-BACKUP/02-ocp-jdg-datalake-datagrid-claim.yaml
+DEFAULT_CACHE				Indicates the default cache for this cache container.										Example: addressbook 
+																						(else 1st on CACHE_NAMES)
+HOTROD_SERVICE_NAME			Name of the OpenShift service used to expose HotRod externally.									Example: DATAGRID_APP_HOTROD
+INFINISPAN_CONNECTORS			Comma separated list of connectors to configure. Defaults to hotrod, memcached, rest. Note that if authorization or 
+					authentication is enabled on the cache then memcached should be removed as this protocol is inherently insecure.		Example: hotrod 
+
+
+More: https://access.redhat.com/documentation/en-us/red_hat_jboss_data_grid/7.1/html-single/data_grid_for_openshift/#jdg-configuration-environment-variables

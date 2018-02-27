@@ -1,0 +1,163 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  creationTimestamp: '2018-02-20T16:03:55Z'
+  generation: 8
+  labels:
+    application: ocp-jdg-datalake
+    template: datagrid71-partition
+    xpaas: 1.4.8
+  name: ocp-jdg-datalake
+  namespace: myproject
+  resourceVersion: '22477'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/myproject/deploymentconfigs/ocp-jdg-datalake
+  uid: a6f3e2b5-1657-11e8-8cc1-68f728593760
+spec:
+  replicas: 3
+  selector:
+    deploymentConfig: ocp-jdg-datalake
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        application: ocp-jdg-datalake
+        deploymentConfig: ocp-jdg-datalake
+      name: ocp-jdg-datalake
+    spec:
+      containers:
+        - env:
+            - name: USERNAME
+            - name: PASSWORD
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.KUBE_PING
+            - name: OPENSHIFT_KUBE_PING_NAMESPACE
+              value: myproject
+            - name: INFINISPAN_CONNECTORS
+              value: 'hotrod,memcached,rest'
+            - name: CACHE_NAMES
+              value: 'carcache,partitionedcache'
+            - name: DATAVIRT_CACHE_NAMES
+            - name: CACHE_TYPE_DEFAULT
+            - name: ENCRYPTION_REQUIRE_SSL_CLIENT_AUTH
+            - name: HOTROD_SERVICE_NAME
+              value: ocp-jdg-datalake-hotrod
+            - name: MEMCACHED_CACHE
+            - name: REST_SECURITY_DOMAIN
+            - name: JGROUPS_CLUSTER_PASSWORD
+              value: keHNpDcR
+            - name: ADMIN_GROUP
+            - name: HOTROD_AUTHENTICATION
+            - name: CONTAINER_SECURITY_ROLE_MAPPER
+            - name: CONTAINER_SECURITY_ROLES
+            - name: DATAGRID_SPLIT
+              value: 'true'
+          image: >-
+            registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift@sha256:b1099d3e60249c63b2cce2e0ef42c31cc9ce05f41c028f0bb219e90d4862d36a
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - '-c'
+                - /opt/datagrid/bin/livenessProbe.sh
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: ocp-jdg-datalake
+          ports:
+            - containerPort: 8778
+              name: jolokia
+              protocol: TCP
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11211
+              name: memcached
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod-internal
+              protocol: TCP
+            - containerPort: 11333
+              name: hotrod
+              protocol: TCP
+            - containerPort: 8787
+              name: debug
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - '-c'
+                - /opt/datagrid/bin/readinessProbe.sh
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/datagrid/standalone/partitioned_data
+              name: ocp-jdg-datalake-datagrid-pvol
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: ocp-jdg-datalake-datagrid-pvol
+          persistentVolumeClaim:
+            claimName: ocp-jdg-datalake-datagrid-claim
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - ocp-jdg-datalake
+        from:
+          kind: ImageStreamTag
+          name: 'jboss-datagrid71-openshift:1.2'
+          namespace: openshift
+        lastTriggeredImage: >-
+          registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift@sha256:b1099d3e60249c63b2cce2e0ef42c31cc9ce05f41c028f0bb219e90d4862d36a
+      type: ImageChange
+    - type: ConfigChange
+status:
+  availableReplicas: 3
+  conditions:
+    - lastTransitionTime: '2018-02-21T07:05:57Z'
+      lastUpdateTime: '2018-02-21T07:05:57Z'
+      message: replication controller "ocp-jdg-datalake-4" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+    - lastTransitionTime: '2018-02-21T08:32:08Z'
+      lastUpdateTime: '2018-02-21T08:32:08Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+  details:
+    causes:
+      - type: ConfigChange
+    message: config change
+  latestVersion: 4
+  observedGeneration: 8
+  readyReplicas: 3
+  replicas: 3
+  unavailableReplicas: 0
+  updatedReplicas: 3
+

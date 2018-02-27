@@ -1,0 +1,69 @@
+== JDG Cliens in OCP Demo
+
+The Demo intends to showcase the capabilities a client has utilizing JDG Library and JDG HotRod Client/Server APIs
+(*Note*: currently clustering has not been possible on JDG Library mode but that could potentialy be possible via TCP & Gossip router)
+
+=== The Source Code
+
+https://github.com/skoussou/jdg-everywhere/tree/master/on-ocp-jdg-clients/carmart[Demo Code]
+
+=== Pre-Requisites
+
+* Note: the code above when running in *REMOTE Hot Rod CLIENT/SERVER mode* requires a datalake available at service name *_jdg-datalake_* (TODO: Make this available externally for application code via ENV Variable)
+* Create datalake based on instructions https://github.com/skoussou/jdg-everywhere/tree/master/on-paas-datalake-creator/README.adoc[on-paas-datalake-creator]
+
+[source, bash]
+----
+./datalake-create.sh jdg-datalake
+./datalake-scale.sh jdg-datalake
+./datalake-delete.sh jdg-datalake
+----
+
+
+=== Setup LIB MODE Client (default profile)
+
+* Building code, creating new OCP binary build template, starting build of image, creating application from the image & exposing the service
+
+[source, bash]
+----
+cd ./carmart
+mvn clean package
+oc new-build --binary=true --image-stream=jboss-eap71-openshift:1.1 --name=eap-app-jdg-lib-client -l application=eap-app-jdg-lib-client
+oc start-build eap-app-jdg-lib-client --from-dir=target --follow 
+oc new-app eap-app-jdg-lib-client -l application=eap-app-jdg-lib-client
+oc expose svc/eap-app-jdg-lib-client -l application=eap-app-jdg-lib-client
+----
+
+* *Access the application* at _http://eap-app-jdg-lib-client-jdg-[NAMESPACE NAME].127.0.0.1.nip.io/jboss-carmart_
+* *_Remove_* the application 
+
+[source, bash]
+----
+oc delete all -l application=eap-app-jdg-lib-client
+----
+
+
+=== Setup Hot Rod CLIENT/SERVER MODE 
+
+* Building code, creating new OCP binary build template, starting build of image, creating application from the image & exposing the service
+[source, bash]
+----
+cd ./carmart
+mvn clean package -Popenshift -DskipTests
+oc new-build --binary=true --image-stream=jboss-eap71-openshift:1.1 --name=eap-app-hotrod-client -l application=eap-app-hotrod-client
+oc start-build eap-app-hotrod-client --from-dir=deployments --follow 
+oc new-app eap-app-hotrod-client -l application=eap-app-hotrod-client
+oc expose svc/eap-app-hotrod-client -l application=eap-app-hotrod-client
+----
+
+* *Access the application* at _hhttp://eap-app-hotrod-client-jdg-rest-rolling-upgrade-demo.127.0.0.1.nip.io/jdg-carmart_
+* *_Remove_* the application 
+
+[source, bash]
+----
+oc delete all -l application=eap-app-hotrod-client
+----
+
+
+
+

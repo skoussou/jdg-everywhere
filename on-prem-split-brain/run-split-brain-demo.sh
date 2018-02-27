@@ -86,7 +86,7 @@ do
     sleep 1
     echo "  - Waiting for JDG Node 3 to become available"
 done
-echo "  - JDG Node 2 Status - Running"
+echo "  - JDG Node 3 Status - Running"
 
 echo
 echo "  - Building the jdg-generic-importer project"
@@ -192,12 +192,23 @@ sleep 7
 echo 
 echo
 echo
-echo
-echo
 echo ============================================================== 
 echo INITIATE GRID SPLIT-BRAIN
 echo ==============================================================
 echo
+echo Adding JGROUPs diagnostics socket binding to JDG Node 3
+echo "-------------------------------------------------------"
+echo
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command="/socket-binding-group=standard-sockets/socket-binding=jgroups-diagnostics:add(port=0, multicast-address=230.0.0.4, multicast-port=7500)" | grep result | grep running > /dev/null
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command="/subsystem=datagrid-jgroups/stack=udp/transport=UDP:write-attribute(name=diagnostics-socket-binding, value=jgroups-diagnostics)" | grep result | grep running > /dev/null
+
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command="/subsystem=datagrid-jgroups/stack=udp/protocol=FD_ALL:write-attribute(name=properties.interval, value=2000)"  | grep result | grep running > /dev/null
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command="/subsystem=datagrid-jgroups/stack=udp/protocol=FD_ALL:write-attribute(name=properties.timeout, value=5000)"  | grep result | grep running > /dev/null
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command="/subsystem=datagrid-jgroups/stack=udp/protocol=VERIFY_SUSPECT/property=timeout:add(value=1000)"  | grep result | grep running > /dev/null
+
+$JDG_HOME/bin/cli.sh --controller=localhost:10290 -c --command=":reload" | grep result | grep running > /dev/null
+
+
 echo 
 echo "----------------------------------------------------------------------------------------------------"
 echo "Open Terminal at $JDG_HOME and run probe JGROUPs utility to check the UDP stack and cause split-brain"

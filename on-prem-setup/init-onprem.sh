@@ -188,7 +188,7 @@ echo
 
 EAP_EXISTS=$(cd target && find -name jboss-eap-7*)
 echo EAP_EXISTS=$EAP_EXISTS
-if [ -d $EAP_EXISTS ]; then
+if [ -z $EAP_EXISTS ]; then
    echo
    unzip -q -d target $SRC_DIR/$EAP_INSTALL
 else
@@ -198,10 +198,11 @@ fi
 
 EAP_HOME=$(cd target/jboss-eap-7* && pwd)
 
-
-if [ -z EAP_EXISTS ]; then
+if [ -d $EAP_EXISTS ]; then
   echo "  - Configuring JBoss EAP"
+  echo EAP_HOME $EAP_HOME
   echo
+
   $EAP_HOME/bin/add-user.sh -s -u admin -p admin-123 -s
   $EAP_HOME/bin/add-user.sh -a -u admin -p admin-123 -r ApplicationRealm -s
   $EAP_HOME/bin/jboss-cli.sh --file=support/jboss-eap-7-visualizer-config.cli  > /dev/null || { echo >&2 "Failed to configure JBoss EAP 7. Aborting"; exit 7; }
@@ -211,7 +212,7 @@ echo "  - Starting JBoss EAP"
 echo
 export JAVA_OPTS="-Xms256m -Xmx1024m"
 pushd target/jboss-eap-7*/bin > /dev/null
-./standalone.sh -b 0.0.0.0  -Djdg.visualizer.jmxUser=admin -Djdg.visualizer.jmxPass=admin-123 -Djdg.visualizer.serverList=localhost:11322\;localhost:11422\;localhost:11522 > /dev/null &
+./standalone.sh -b 0.0.0.0  -Djdg.visualizer.jmxUser=admin -Djdg.visualizer.jmxPass=admin-123 -Djdg.visualizer.serverList=127.0.0.1:11322\;127.0.0.1:11422\;127.0.0.1:11522 > /dev/null &
 popd > /dev/null
 
 echo "  - Building the stackexchange project"
@@ -226,6 +227,15 @@ pushd projects/jdg-visualizer > /dev/null
 mvn -q clean install || { echo >&2 "Failed to compile the jdg-visualizer project"; exit 3; }
 popd > /dev/null
 
+echo "  - Waiting for EAP to become available"
+printf "  "
+until $($EAP_HOME/bin/jboss-cli.sh -c --controller=localhost:9990 --command=":read-attribute(name=server-state)" | grep result | grep running > /dev/null)
+do
+    sleep 1
+    printf "."
+done
+echo
+
 echo "  - Deploy jdg-visualizer application"
 echo
 pushd projects/jdg-visualizer > /dev/null
@@ -237,3 +247,6 @@ echo
 pushd projects/stackexchange/visualizer > /dev/null
 mvn -q wildfly:deploy
 popd > /dev/null
+
+
+

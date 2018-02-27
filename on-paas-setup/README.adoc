@@ -1,0 +1,100 @@
+== JBoss Data Grid Demos On OCP Setup
+
+This directory provides a setup fo ALL On OCP Demos
+
+=== Openshift Downloads
+
+*Warning*: We assume you have *_docker daemon_* running (eg. Linux installation, or a vm with docker on Windows etc.). See configurations for docker registries/storage at *./docker*
+*Note*: Ensure there is enough (at least 12GB) of RAM available
+
+To setup the infrastructure for the demo download the following files to the _*installs*_ directory:
+
+* https://access.redhat.com/downloads/content/290/[Openshift Tools]
+* https://github.com/jboss-openshift/application-templates[Openshift Product Templates]
+
+
+=== Setup OCP Environment - LOCAL
+
+* Add Openshift *oc* binary downloaded above to the ENV properties
+
+[source, bash]
+---
+eg. ~.bashrc
+PATH=:/home/stkousso/Stelios/sw10/PAAS/Tooling/ocp-tools/oc-3.7.23-linux:$PATH
+export $PATH
+---
+
+* Run setup of env variables to store data & configs for OCP env (can use oc cluster-wrapper for better support)
+
+[source, bash]
+----
+source export-ocp-profile-variables.sh NAME-OF-CLUSTER-DIR PATH-TO-CREATE-DIR-UNDER
+eg. source export-ocp-profile-variables.sh BRMS-ON-OCP /home/stkousso/Stelios/sw10/PAAS/Training/OCP-Storage/oc/profiles
+----
+
+* Start the cluster and save data/configs in directory (reloadable)
+[source, bash]
+----
+oc cluster up --host-data-dir=$OCPprofileDataDir --host-config-dir=$OCPprofileConfigDir
+----
+
+== Initialize the OCP environment 
+
+* [Optional] Pull Container images locally
+Note: in case you are behind a slow connection you can pull the necessary images locally prior to doing so via imagestreams which can result on a timeout
+
+[source, bash]
+----
+docker pull registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+docker pull registry.access.redhat.com/jboss-datagrid-6/datagrid65-openshift
+docker pull registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift
+docker pull registry.access.redhat.com/jboss-eap-7/eap71-openshift
+docker pull registry.access.redhat.com/openshift3/ose:v3.7.23
+----
+
+* Add necessary imagestreams to the Openshift namespace
+
+[source, bash]
+----
+oc login -u system:admin
+oc create -f ./installs/application-templates/jboss-image-streams.json -n openshift
+oc get imagestream -n openshift
+oc login -u developer -p developer
+----
+
+* Add necessary templates to the Openshift namespace
+
+[source, bash]
+----
+oc login -u system:admin
+oc create -f ./installs/application-templates/datagrid/datagrid65-basic.json -n openshift
+oc create -f ./installs/application-templates/datagrid/datagrid71-basic.json -n openshift
+oc create -f ./installs/application-templates/./eap/eap71-basic-s2i.json -n openshift  
+oc login -u developer -p developer
+----
+
+
+
+
+
+
+
+
+
+
+* Run the `init-onprem.sh` script to create the EAP & 3 JDG Nodes Setup
+  * In addition, it sets up caches via _*/support/jboss-eap-7-visualizer-config.cli*_ script (so put any new caches in this script)
+  * In addition, it deploys the _*./projects/jdg-visualizer_* in EAP to visualize JDG cluster
+
+[source, bash]
+---
+    $ sh init-onprem.sh
+---
+
+
+* Run the 'clean.sh' and follow prompts to stop servers or clean the enviroment
+
+[source, bash]
+---
+    $ sh clean.sh
+---

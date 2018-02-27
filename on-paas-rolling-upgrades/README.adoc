@@ -1,0 +1,83 @@
+* LABEL SOURCE CLUSTER: app=jdg65-cluster
+* LABEL SOURCE CLUSTER: app=jdg71-cluster
+
+== OCP SETUP
+
+* Change to project *jdg-rest-rolling-upgrade-demo*
+---
+oc project jdg-rest-rolling-upgrade-demo
+---
+
+== RUN Demo
+
+* Create SOURCE & TARGET CLUSTERS
+
+[source, bash]
+----
+./update-create-rolling-upgrades-clusters.sh KUBE_PING		(recommended)
+or
+./update-create-rolling-upgrades-clusters.sh 			(default: DNS_PING)
+----
+
+Note: As PODs are to be scaled up it adds view permissions for KUBERNETES API to facilitate discover of nodes
+[source, bash]
+----
+oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -n $(oc project -q)
+oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account -n $(oc project -q)
+
+# and ENV variables for KUBE_PING
+                                    -e JGROUPS_PING_PROTOCOL=openshift.KUBE_PING
+                                    -e OPENSHIFT_KUBE_PING_LABELS=app=jdg71-cluster
+                                    -e OPENSHIFT_KUBE_PING_NAMESPACE=jdg-rest-rolling-upgrade-demo
+----
+
+* TEST cluster content (No Content on JDG71Cluster)
+[source, bash]
+----
+./update-link-tests.sh
+----
+
+* LINK TARGET to SOURCE
+[source, bash]
+----
+./update-link-TARGET-to-SOURCE-CLUSTER.sh
+----
+
+* TEST cluster content  (Link pulls content from JDG65Cluster (Source) to JDG71Cluster (Target))
+[source, bash]
+----
+./update-link-tests.sh
+----
+
+* MIGRATE from SOURCE To TARGET content
+[source, bash]
+----
+./update-sync-caches-SOURCE-to-TARGET.sh
+----
+
+* TEST Target Content
+[source, bash]
+----
+./update-migrate-tests.sh
+----
+
+* UNLINK clusters
+[source, bash]
+----
+./update-disable-REMOTE-SOURCE-CLUSTER-connections.sh
+----
+
+* TEST Target Content
+[source, bash]
+----
+./update-migrate-tests.sh
+----
+
+* DELETE a cluster
+[source, bash]
+----
+./update-delete-CLUSTER-via-LABEL.sh app=jdg65-cluster
+./update-delete-CLUSTER-via-LABEL.sh app=jdg71-cluster
+----
+
+

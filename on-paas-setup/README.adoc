@@ -8,7 +8,7 @@ This directory provides a setup fo ALL On OCP Demos
 
 *Note*: Ensure there is enough (at least 12GB) of RAM available
 
-To setup the infrastructure for the demo download the following files to the _*installs*_ directory:
+To setup the infrastructure for the demo download the following files to the *_installs_* directory:
 
 * https://access.redhat.com/downloads/content/290/[Openshift Tools]
 * https://github.com/jboss-openshift/application-templates[Openshift Product Templates]
@@ -19,11 +19,11 @@ To setup the infrastructure for the demo download the following files to the _*i
 * Add Openshift *oc* binary downloaded above to the ENV properties
 
 [source, bash]
----
+----
 eg. ~.bashrc
 PATH=:/home/stkousso/Stelios/sw10/PAAS/Tooling/ocp-tools/oc-3.7.23-linux:$PATH
 export $PATH
----
+----
 
 * Run setup of env variables to store data & configs for OCP env (can use oc cluster-wrapper for better support)
 

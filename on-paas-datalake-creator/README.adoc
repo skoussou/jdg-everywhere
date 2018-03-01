@@ -5,7 +5,7 @@ Gives the tools to quickly define a JDG Datalake on OCP
 *TODO:* Tooling is a bit thin at the moment just creating/managing/deleting
 
 Increase to
-a) Options on type of caches
+a) Options on type of caches (maybe via external file)
 b) Check if datalake (n/w and cache names) already exists
 
 == USAGE
@@ -34,3 +34,7 @@ In each project it should be possible to
 ----
 ./ datalake-scale-up.sh <DATALAKE-SERVICE-NAME> [NAMESPACE]
 ----
+
+== Monitoring
+
+See: https://github.com/skoussou/jdg-everywhere/blob/master/on-paas-datalake-creator/README-Create-Monitor-Manage-JDG-Lake.adoc[How To Monitor Caches in PODs]
